@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html {
+        width: 100%;
+        height: 100%;
+      }
+      * {
+        text-rendering: optimizeLegibility;
+        font-family: "Baloo Tammudu 2", cursive;
+      }
+
+      body {
+        background: url('https://www.toptal.com/designers/subtlepatterns/patterns/email-pattern.png') #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        
+      }
+
+      .header{
+        position: absolute;
+        padding: 12rem 3rem;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #0f3057;
+      }
+
+      .title-header{
+        position: absolute;
+        color: #fff;
+        top: 30%;
+        left: 10%;
+      }
+
+      .container-principal {
+        background: #fff;
+        padding: 3rem 6rem;
+        width: 950px;
+        max-width: 100%;
+        margin: auto;
+      }
+
+      .user {
+        margin-bottom: 1rem;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .datetime {
+        float: right;
+        font-size: 80%;
+        color: gray;
+      }
+
+      .gender-img {
+        display: inline-block;
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+      }
+
+      .card-shadow {
+        box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.13);
+      }
+
+      .p {
+        color: rgba(0, 0, 0, 0.575);
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+        <h1 class="title-header">Sistema de usuarios</h1>
+    </header>
+    <div class="container container-principal border">
+      <div
+        class="modal fade"
+        id="crear-usuario-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">
+                <i class="fa fa-user-plus mr-2"></i>
+                Agregar usuario
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="create-user-form">
+                <div class="row">
+                  <div class="col-12">
+                    <div
+                      class="alert alert-warning fade show"
+                      role="alert"
+                      id="usuario-existe"
+                      style="display: none"
+                    >
+                      <small>El usuario ya existe.</small>
+                      <i
+                        class="fa fa-exclamation-circle float-right"
+                        style="font-size: 20px"
+                      ></i>
+                    </div>
+
+                    <div
+                      class="alert alert-success fade show"
+                      role="alert"
+                      id="usuario-creado"
+                      style="display: none"
+                    >
+                      <small>El usuario se creo correctamente.</small>
+                      <i
+                        class="fa fa-check-circle float-right"
+                        style="font-size: 20px"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="username">Nombre:</label>
+                      <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        placeholder="Juan Alejandro"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="lastname">Apellido:</label>
+                      <input
+                        type="text"
+                        name="lastname"
+                        id="lastname"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        placeholder="Prado Blanca"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="gender">Género</label>
+                      <select
+                        class="form-control"
+                        name="gender"
+                        id="gender"
+                        required
+                      >
+                        <option value="male">Hombre</option>
+                        <option value="Female">Mujer</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="date_user">Fecha de nacimiento:</label>
+                      <input
+                        type="date"
+                        name="date_user"
+                        id="date_user"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                <i class="fa fa-sign-out-alt mr-1"></i>
+                Salir
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                form="create-user-form"
+              >
+                <i class="fa fa-save mr-1"></i>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="usuarios-registrados-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Usuarios registrados
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id="usuarios_registrados"></section>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="editar-usuarios-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar usuarios</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id="editar_usuarios"></section>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="editar-usuario-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="fa fa-edit mr-2"></i>
+                Editar usuario
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="edit-user-form">
+                <div class="row">
+                  <div class="col-12">
+                    <div
+                      class="alert alert-warning fade show"
+                      role="alert"
+                      id="usuario-no-editado"
+                      style="display: none"
+                    >
+                      <small>El usuario no se puede editar.</small>
+                      <i
+                        class="fa fa-exclamation-circle float-right"
+                        style="font-size: 20px"
+                      ></i>
+                    </div>
+
+                    <div
+                      class="alert alert-success fade show"
+                      role="alert"
+                      id="usuario-editado"
+                      style="display: none"
+                    >
+                      <small>El usuario se edito correctamente.</small>
+                      <i
+                        class="fa fa-check-circle float-right"
+                        style="font-size: 20px"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="username_edit">Nombre:</label>
+                      <input
+                        type="text"
+                        name="username_edit"
+                        id="username_edit"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        placeholder="Juan Alejandro"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="lastname_edit">Apellido:</label>
+                      <input
+                        type="text"
+                        name="lastname_edit"
+                        id="lastname_edit"
+                        class="form-control"
+                        minlength="3"
+                        maxlength="20"
+                        placeholder="Prado Blanca"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="gender_edit">Género</label>
+                      <select
+                        class="form-control"
+                        name="gender_edit"
+                        id="gender_edit"
+                        required
+                      >
+                        <option value="male">Hombre</option>
+                        <option value="Female">Mujer</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="date_user_edit">Fecha de nacimiento:</label>
+                      <input
+                        type="date"
+                        name="date_user_edit"
+                        id="date_user_edit"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" name="id_user" />
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                <i class="fa fa-sign-out-alt mr-1"></i>
+                Salir
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success"
+                form="edit-user-form"
+              >
+                <i class="fa fa-save mr-1"></i>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="eliminar-usuarios-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Eliminar usuarios</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <section id="eliminar_usuarios"></section>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="eliminar-usuario-modal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="fa fa-trash mr-2"></i>
+                Eliminar usuario
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <h4>
+                  Seguro de eliminar al usuario:
+                  <span id="usuario_eliminar"></span>
+                </h4>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                <i class="fa fa-sign-out-alt mr-1"></i>
+                Salir
+              </button>
+              <button class="btn btn-danger" id="remove-user-btn">
+                <i class="fa fa-trash mr-1"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="mt-2">CRUD para agregar usuarios</h4>
+
+      <p class="p lead mt-3">
+        Una simple página para crear usuarios y agregarlos en una lista que se
+        almacena en memoria volatil del navegador, a través de la arquitectura
+        flux que actualmente es conocida como Redux.
+      </p>
+      <section class="row mt-5">
+        <div class="col-lg-3 col-sm-6 mb-2">
+          <button
+            class="m-0 w-100 card card-body card-shadow text-center"
+            data-toggle="modal"
+            data-target="#crear-usuario-modal"
+          >
+            <i class="d-block mx-auto fa fa-plus mb-3"></i>
+            <p class="w-100 text-center m-0">Agregar usuario</p>
+          </button>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 mb-2">
+          <button
+            class="m-0 w-100 card card-body card-shadow"
+            data-toggle="modal"
+            data-target="#usuarios-registrados-modal"
+            id="listar-usuarios"
+          >
+            <i
+              class="d-block mx-auto fa fa-list mb-3"
+            ></i>
+            <p class="w-100 text-center m-0">Listar usuarios</p>
+          </button>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 mb-2">
+          <button
+            class="m-0 w-100 card card-body card-shadow"
+            data-toggle="modal"
+            data-target="#editar-usuarios-modal"
+            id="editar-usuarios"
+          >
+            <i class="d-block mx-auto fa fa-edit mb-3"></i>
+            <p class="w-100 text-center m-0">Editar usuario</p>
+          </button>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 mb-2">
+          <button
+            class="m-0 w-100 card card-body card-shadow"
+            data-toggle="modal"
+            data-target="#eliminar-usuarios-modal"
+            id="eliminar-usuario"
+          >
+            <i class="d-block mx-auto fa fa-trash-alt mb-3"></i>
+            <p class="w-100 text-center m-0">Eliminar usuario</p>
+          </button>
+        </div>
+      </section>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/7d7cc578e0.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/main.js"></script>
+  </body>
+</html>
